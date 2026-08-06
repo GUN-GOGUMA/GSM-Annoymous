@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import org.bukkit.configuration.ConfigurationSection;
@@ -69,6 +71,16 @@ public final class PlayerPrivacyRepository {
 
     public PlayerPrivacyData get(UUID uuid) {
         return players.get(uuid);
+    }
+
+    public Set<String> getAnonymousNamesExcept(UUID uuid) {
+        Set<String> names = new HashSet<>();
+        for (PlayerPrivacyData data : players.values()) {
+            if (!data.getUuid().equals(uuid) && data.getAnonymousName() != null) {
+                names.add(data.getAnonymousName());
+            }
+        }
+        return names;
     }
 
     public void save(PlayerPrivacyData data) {
