@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public final class PlayerDisplayListener implements Listener {
@@ -48,6 +49,15 @@ public final class PlayerDisplayListener implements Listener {
         }
 
         event.deathMessage(replaceRealName(event.deathMessage(), event.getPlayer()));
+    }
+
+    @EventHandler
+    public void onPlayerAdvancementDone(PlayerAdvancementDoneEvent event) {
+        if (!plugin.getConfig().getBoolean("display.updateAdvancementMessage", true)) {
+            return;
+        }
+
+        event.message(replaceRealName(event.message(), event.getPlayer()));
     }
 
     private Component replaceRealName(Component message, Player player) {
