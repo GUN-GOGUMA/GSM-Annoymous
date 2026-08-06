@@ -7,6 +7,7 @@ public final class GsmAnnoymous extends JavaPlugin {
     private PlayerPrivacyRepository playerPrivacyRepository;
     private AnonymousNameGenerator anonymousNameGenerator;
     private NicknameService nicknameService;
+    private SkinService skinService;
 
     @Override
     public void onEnable() {
@@ -19,7 +20,8 @@ public final class GsmAnnoymous extends JavaPlugin {
         playerPrivacyRepository = new PlayerPrivacyRepository(this);
         playerPrivacyRepository.load();
         nicknameService = new NicknameService(this, playerPrivacyRepository, anonymousNameGenerator);
-        getServer().getPluginManager().registerEvents(new PlayerConnectionListener(nicknameService), this);
+        skinService = new SkinService(this);
+        getServer().getPluginManager().registerEvents(new PlayerConnectionListener(nicknameService, skinService), this);
         Objects.requireNonNull(getCommand("hide_nick")).setExecutor(
                 new HideNickCommand(nicknameService, playerPrivacyRepository)
         );
@@ -44,5 +46,9 @@ public final class GsmAnnoymous extends JavaPlugin {
 
     public NicknameService getNicknameService() {
         return nicknameService;
+    }
+
+    public SkinService getSkinService() {
+        return skinService;
     }
 }
