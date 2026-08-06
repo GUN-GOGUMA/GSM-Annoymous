@@ -1,5 +1,6 @@
 package dev.gungoguma.annoymous;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public final class NicknameService {
@@ -31,13 +32,14 @@ public final class NicknameService {
 
     public void apply(Player player, PlayerPrivacyData data) {
         String displayName = data.isHideNick() ? data.getAnonymousName() : player.getName();
+        Component displayNameComponent = Component.text(displayName);
 
         if (plugin.getConfig().getBoolean("display.updateDisplayName", true)) {
-            player.setDisplayName(displayName);
+            player.displayName(displayNameComponent);
         }
 
         if (plugin.getConfig().getBoolean("display.updatePlayerListName", true)) {
-            player.setPlayerListName(displayName);
+            player.playerListName(displayNameComponent);
         }
     }
 
