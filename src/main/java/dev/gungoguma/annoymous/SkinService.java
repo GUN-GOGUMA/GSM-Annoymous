@@ -41,7 +41,7 @@ public final class SkinService {
 
         String anonymousProfile = plugin.getConfig().getString("skin.anonymousProfile", "STEVE");
         if (!"STEVE".equalsIgnoreCase(anonymousProfile)) {
-            plugin.getLogger().warning("Unsupported anonymous skin profile: " + anonymousProfile);
+            plugin.getLogger().warning("Unsupported anonymous skin profile '" + anonymousProfile + "'. Only STEVE is supported.");
             return;
         }
 
@@ -54,7 +54,13 @@ public final class SkinService {
     private void restore(Player player) {
         Set<ProfileProperty> textures = realSkinProperties.get(player.getUniqueId());
         if (textures == null || textures.isEmpty()) {
-            plugin.getLogger().warning("Could not restore real skin for " + player.getName() + ": no cached texture.");
+            plugin.getLogger().warning(
+                    "Could not restore real skin for "
+                            + player.getName()
+                            + " ("
+                            + player.getUniqueId()
+                            + "): no cached texture. The player may need to reconnect."
+            );
             return;
         }
 

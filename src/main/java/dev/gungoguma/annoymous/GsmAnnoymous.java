@@ -32,9 +32,13 @@ public final class GsmAnnoymous extends JavaPlugin {
 
     public void reloadPluginConfig() {
         reloadConfig();
+        String salt = getConfig().getString("anonymous.salt", "");
+        if (salt == null || salt.isBlank() || "change-me".equalsIgnoreCase(salt)) {
+            getLogger().warning("anonymous.salt is not set. Set a private salt in config.yml before production use.");
+        }
         anonymousNameGenerator = new AnonymousNameGenerator(
                 getConfig().getString("anonymous.prefix", "gsm_"),
-                getConfig().getString("anonymous.salt", ""),
+                salt,
                 getConfig().getInt("anonymous.hashLength", 6)
         );
         if (nicknameService != null) {

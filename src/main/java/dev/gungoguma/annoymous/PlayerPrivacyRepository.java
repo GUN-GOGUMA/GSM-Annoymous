@@ -32,22 +32,21 @@ public final class PlayerPrivacyRepository {
         players.clear();
 
         ConfigurationSection playersSection = configuration.getConfigurationSection("players");
-        if (playersSection == null) {
-            return;
-        }
-
-        for (String key : playersSection.getKeys(false)) {
-            try {
-                UUID uuid = UUID.fromString(key);
-                ConfigurationSection section = playersSection.getConfigurationSection(key);
-                if (section == null) {
-                    continue;
+        if (playersSection != null) {
+            for (String key : playersSection.getKeys(false)) {
+                try {
+                    UUID uuid = UUID.fromString(key);
+                    ConfigurationSection section = playersSection.getConfigurationSection(key);
+                    if (section == null) {
+                        continue;
+                    }
+                    players.put(uuid, readPlayer(uuid, section));
+                } catch (IllegalArgumentException exception) {
+                    plugin.getLogger().warning("Invalid UUID in players.yml: " + key);
                 }
-                players.put(uuid, readPlayer(uuid, section));
-            } catch (IllegalArgumentException exception) {
-                plugin.getLogger().warning("Invalid UUID in players.yml: " + key);
             }
         }
+        plugin.getLogger().info("Loaded " + players.size() + " anonymous player records from " + playersFile.getName() + ".");
     }
 
     public PlayerPrivacyData getOrCreate(UUID uuid, String playerName) {
@@ -151,7 +150,7 @@ public final class PlayerPrivacyRepository {
         try {
             configuration.save(playersFile);
         } catch (IOException exception) {
-            plugin.getLogger().log(Level.SEVERE, "Failed to save players.yml.", exception);
+            plugin.getLogger().log(Level.SEVERE, "Failed to save anonymous player data: " + playersFile.getAbsolutePath(), exception);
         }
     }
 }
