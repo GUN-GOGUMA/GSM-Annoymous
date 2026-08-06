@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 public final class NicknameService {
     private final GsmAnnoymous plugin;
     private final PlayerPrivacyRepository repository;
-    private final AnonymousNameGenerator generator;
+    private AnonymousNameGenerator generator;
 
     public NicknameService(
             GsmAnnoymous plugin,
@@ -28,6 +28,10 @@ public final class NicknameService {
         }
         repository.save(data);
         return data;
+    }
+
+    public void setGenerator(AnonymousNameGenerator generator) {
+        this.generator = generator;
     }
 
     public void apply(Player player, PlayerPrivacyData data) {

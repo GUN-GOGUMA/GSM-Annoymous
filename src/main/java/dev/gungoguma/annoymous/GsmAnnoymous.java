@@ -12,11 +12,7 @@ public final class GsmAnnoymous extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        anonymousNameGenerator = new AnonymousNameGenerator(
-                getConfig().getString("anonymous.prefix", "gsm_"),
-                getConfig().getString("anonymous.salt", ""),
-                getConfig().getInt("anonymous.hashLength", 6)
-        );
+        reloadPluginConfig();
         playerPrivacyRepository = new PlayerPrivacyRepository(this);
         playerPrivacyRepository.load();
         nicknameService = new NicknameService(this, playerPrivacyRepository, anonymousNameGenerator);
@@ -28,7 +24,20 @@ public final class GsmAnnoymous extends JavaPlugin {
         Objects.requireNonNull(getCommand("hide_skin")).setExecutor(
                 new HideSkinCommand(nicknameService, skinService, playerPrivacyRepository)
         );
+        Objects.requireNonNull(getCommand("annoymous")).setExecutor(new AnnoymousAdminCommand(this));
         getLogger().info("GSM-Annoymous enabled.");
+    }
+
+    public void reloadPluginConfig() {
+        reloadConfig();
+        anonymousNameGenerator = new AnonymousNameGenerator(
+                getConfig().getString("anonymous.prefix", "gsm_"),
+                getConfig().getString("anonymous.salt", ""),
+                getConfig().getInt("anonymous.hashLength", 6)
+        );
+        if (nicknameService != null) {
+            nicknameService.setGenerator(anonymousNameGenerator);
+        }
     }
 
     @Override

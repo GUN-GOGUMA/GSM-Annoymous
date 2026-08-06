@@ -73,6 +73,14 @@ public final class PlayerPrivacyRepository {
         return players.get(uuid);
     }
 
+    public void remove(UUID uuid) {
+        players.remove(uuid);
+        if (configuration != null) {
+            configuration.set("players." + uuid, null);
+            saveFile();
+        }
+    }
+
     public Set<String> getAnonymousNamesExcept(UUID uuid) {
         Set<String> names = new HashSet<>();
         for (PlayerPrivacyData data : players.values()) {

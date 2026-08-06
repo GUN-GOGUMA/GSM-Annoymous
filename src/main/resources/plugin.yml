@@ -14,6 +14,9 @@ commands:
     description: Toggle anonymous skin.
     usage: /hide_skin
     permission: gsmannoymous.command.hide_skin
+  annoymous:
+    description: Manage GSM-Annoymous.
+    usage: /annoymous <reload|status|reset|regenerate>
 
 permissions:
   gsmannoymous.command.hide_nick:
@@ -22,3 +25,12 @@ permissions:
   gsmannoymous.command.hide_skin:
     description: Allows toggling anonymous skin.
     default: true
+  gsmannoymous.admin.reload:
+    description: Allows reloading GSM-Annoymous config.
+    default: op
+  gsmannoymous.admin.status:
+    description: Allows viewing anonymous status.
+    default: op
+  gsmannoymous.admin.reset:
+    description: Allows resetting or regenerating anonymous data.
+    default: op
