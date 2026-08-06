@@ -16,6 +16,7 @@ public final class PlayerConnectionListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         PlayerPrivacyData data = nicknameService.prepare(event.getPlayer());
+        skinService.rememberRealSkin(event.getPlayer());
         nicknameService.apply(event.getPlayer(), data);
         skinService.apply(event.getPlayer(), data);
 

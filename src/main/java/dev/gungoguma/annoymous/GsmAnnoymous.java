@@ -25,6 +25,9 @@ public final class GsmAnnoymous extends JavaPlugin {
         Objects.requireNonNull(getCommand("hide_nick")).setExecutor(
                 new HideNickCommand(nicknameService, playerPrivacyRepository)
         );
+        Objects.requireNonNull(getCommand("hide_skin")).setExecutor(
+                new HideSkinCommand(nicknameService, skinService, playerPrivacyRepository)
+        );
         getLogger().info("GSM-Annoymous enabled.");
     }
 

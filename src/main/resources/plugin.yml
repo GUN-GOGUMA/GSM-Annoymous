@@ -10,8 +10,15 @@ commands:
     description: Toggle anonymous nickname.
     usage: /hide_nick
     permission: gsmannoymous.command.hide_nick
+  hide_skin:
+    description: Toggle anonymous skin.
+    usage: /hide_skin
+    permission: gsmannoymous.command.hide_skin
 
 permissions:
   gsmannoymous.command.hide_nick:
     description: Allows toggling anonymous nickname.
+    default: true
+  gsmannoymous.command.hide_skin:
+    description: Allows toggling anonymous skin.
     default: true
