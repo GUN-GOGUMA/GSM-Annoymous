@@ -19,6 +19,7 @@ public final class GsmAnnoymous extends JavaPlugin {
         nicknameService = new NicknameService(this, playerPrivacyRepository, anonymousNameGenerator);
         skinService = new SkinService(this);
         getServer().getPluginManager().registerEvents(new PlayerConnectionListener(nicknameService, skinService), this);
+        getServer().getPluginManager().registerEvents(new PlayerDisplayListener(this, nicknameService), this);
         Objects.requireNonNull(getCommand("hide_nick")).setExecutor(
                 new HideNickCommand(nicknameService, playerPrivacyRepository)
         );
