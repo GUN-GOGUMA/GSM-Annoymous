@@ -1,1 +1,31 @@
 # GSM-Annoymous configuration
+
+anonymous:
+  prefix: "gsm_"
+  salt: "change-me"
+  hashLength: 6
+
+defaults:
+  hideNick: true
+  hideSkin: true
+
+skin:
+  anonymousProfile: "steve"
+  refreshOnToggle: true
+
+storage:
+  playersFile: "players.yml"
+  saveOnToggle: true
+
+display:
+  updateDisplayName: true
+  updatePlayerListName: true
+  updateChatName: true
+  updateNameTag: true
+  updateDeathMessage: true
+  updateAdvancementMessage: true
+  updateJoinQuitMessage: true
+
+discord:
+  useRealName: true
+  useRealSkin: true
