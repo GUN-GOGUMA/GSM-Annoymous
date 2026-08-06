@@ -4,3 +4,14 @@ main: dev.gungoguma.annoymous.GsmAnnoymous
 api-version: '26.2'
 author: GUNGOGUMA
 description: GSM anonymous nickname and skin plugin.
+
+commands:
+  hide_nick:
+    description: Toggle anonymous nickname.
+    usage: /hide_nick
+    permission: gsmannoymous.command.hide_nick
+
+permissions:
+  gsmannoymous.command.hide_nick:
+    description: Allows toggling anonymous nickname.
+    default: true

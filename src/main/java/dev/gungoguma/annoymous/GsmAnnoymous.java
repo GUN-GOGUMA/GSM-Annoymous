@@ -1,5 +1,6 @@
 package dev.gungoguma.annoymous;
 
+import java.util.Objects;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GsmAnnoymous extends JavaPlugin {
@@ -19,6 +20,9 @@ public final class GsmAnnoymous extends JavaPlugin {
         playerPrivacyRepository.load();
         nicknameService = new NicknameService(this, playerPrivacyRepository, anonymousNameGenerator);
         getServer().getPluginManager().registerEvents(new PlayerConnectionListener(nicknameService), this);
+        Objects.requireNonNull(getCommand("hide_nick")).setExecutor(
+                new HideNickCommand(nicknameService, playerPrivacyRepository)
+        );
         getLogger().info("GSM-Annoymous enabled.");
     }
 
