@@ -45,6 +45,16 @@ public final class NicknameService {
         if (plugin.getConfig().getBoolean("display.updatePlayerListName", true)) {
             player.playerListName(displayNameComponent);
         }
+
+        if (plugin.getConfig().getBoolean("display.updateNameTag", true)) {
+            if (data.isHideNick()) {
+                player.customName(displayNameComponent);
+                player.setCustomNameVisible(true);
+            } else {
+                player.customName(null);
+                player.setCustomNameVisible(false);
+            }
+        }
     }
 
     public String getVisibleName(PlayerPrivacyData data) {
