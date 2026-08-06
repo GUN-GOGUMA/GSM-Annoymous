@@ -1,7 +1,6 @@
 package dev.gungoguma.annoymous;
 
 import java.util.Objects;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GsmAnnoymous extends JavaPlugin {
@@ -70,30 +69,4 @@ public final class GsmAnnoymous extends JavaPlugin {
         return skinService;
     }
 
-    public String getRealName(Player player) {
-        return player.getName();
-    }
-
-    public String getAnonymousName(Player player) {
-        PlayerPrivacyData data = nicknameService.prepare(player);
-        return data.getAnonymousName();
-    }
-
-    public boolean isNickHidden(Player player) {
-        PlayerPrivacyData data = playerPrivacyRepository.get(player.getUniqueId());
-        return data != null && data.isHideNick();
-    }
-
-    public boolean isSkinHidden(Player player) {
-        PlayerPrivacyData data = playerPrivacyRepository.get(player.getUniqueId());
-        return data != null && data.isHideSkin();
-    }
-
-    public String getDiscordName(Player player) {
-        return getConfig().getBoolean("discord.useRealName", true) ? getRealName(player) : getAnonymousName(player);
-    }
-
-    public boolean shouldDiscordUseRealSkin() {
-        return getConfig().getBoolean("discord.useRealSkin", true);
-    }
 }

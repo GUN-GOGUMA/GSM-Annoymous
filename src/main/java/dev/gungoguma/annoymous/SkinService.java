@@ -33,12 +33,7 @@ public final class SkinService {
         }
     }
 
-    public void apply(Player player, PlayerPrivacyData data) {
-        if (!data.isHideSkin()) {
-            restore(player);
-            return;
-        }
-
+    public void applyAnonymous(Player player) {
         String anonymousProfile = plugin.getConfig().getString("skin.anonymousProfile", "STEVE");
         if (!"STEVE".equalsIgnoreCase(anonymousProfile)) {
             plugin.getLogger().warning("Unsupported anonymous skin profile '" + anonymousProfile + "'. Only STEVE is supported.");
@@ -51,7 +46,11 @@ public final class SkinService {
         player.setPlayerProfile(profile);
     }
 
-    private void restore(Player player) {
+    public void restore(Player player) {
+        if (!realSkinProperties.containsKey(player.getUniqueId())) {
+            return;
+        }
+
         Set<ProfileProperty> textures = realSkinProperties.get(player.getUniqueId());
         if (textures == null || textures.isEmpty()) {
             plugin.getLogger().warning(

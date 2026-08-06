@@ -18,7 +18,9 @@ public final class PlayerConnectionListener implements Listener {
         PlayerPrivacyData data = nicknameService.prepare(event.getPlayer());
         skinService.rememberRealSkin(event.getPlayer());
         nicknameService.apply(event.getPlayer(), data);
-        skinService.apply(event.getPlayer(), data);
+        if (data.isHideSkin()) {
+            skinService.applyAnonymous(event.getPlayer());
+        }
 
         if (event.joinMessage() != null) {
             event.joinMessage(event.joinMessage().replaceText(builder -> builder

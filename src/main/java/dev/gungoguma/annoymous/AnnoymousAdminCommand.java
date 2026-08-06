@@ -77,7 +77,11 @@ public final class AnnoymousAdminCommand implements CommandExecutor {
         plugin.getPlayerPrivacyRepository().remove(target.getUniqueId());
         PlayerPrivacyData data = plugin.getNicknameService().prepare(target);
         plugin.getNicknameService().apply(target, data);
-        plugin.getSkinService().apply(target, data);
+        if (data.isHideSkin()) {
+            plugin.getSkinService().applyAnonymous(target);
+        } else {
+            plugin.getSkinService().restore(target);
+        }
         sender.sendMessage(Component.text(target.getName() + "님의 익명 상태를 초기화했습니다.", NamedTextColor.GREEN));
     }
 

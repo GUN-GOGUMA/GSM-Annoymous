@@ -24,7 +24,10 @@ public final class PlayerDisplayListener implements Listener {
             return;
         }
 
-        PlayerPrivacyData data = nicknameService.prepare(event.getPlayer());
+        PlayerPrivacyData data = nicknameService.getPrepared(event.getPlayer());
+        if (data == null) {
+            return;
+        }
         event.renderer((source, sourceDisplayName, message, viewer) ->
                 Component.text("<")
                         .append(Component.text(nicknameService.getVisibleName(data)))
@@ -65,7 +68,10 @@ public final class PlayerDisplayListener implements Listener {
             return null;
         }
 
-        PlayerPrivacyData data = nicknameService.prepare(player);
+        PlayerPrivacyData data = nicknameService.getPrepared(player);
+        if (data == null) {
+            return message;
+        }
         return message.replaceText(builder -> builder
                 .matchLiteral(player.getName())
                 .replacement(nicknameService.getVisibleName(data)));

@@ -32,7 +32,11 @@ public final class HideSkinCommand implements CommandExecutor {
         PlayerPrivacyData data = nicknameService.prepare(player);
         skinService.rememberRealSkin(player);
         data.setHideSkin(!data.isHideSkin());
-        skinService.apply(player, data);
+        if (data.isHideSkin()) {
+            skinService.applyAnonymous(player);
+        } else {
+            skinService.restore(player);
+        }
         repository.save(data);
 
         if (data.isHideSkin()) {

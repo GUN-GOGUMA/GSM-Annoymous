@@ -30,6 +30,10 @@ public final class NicknameService {
         return data;
     }
 
+    public PlayerPrivacyData getPrepared(Player player) {
+        return repository.get(player.getUniqueId());
+    }
+
     public void setGenerator(AnonymousNameGenerator generator) {
         this.generator = generator;
     }
