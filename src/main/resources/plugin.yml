@@ -1,0 +1,6 @@
+name: GSM-Annoymous
+version: ${version}
+main: dev.gungoguma.annoymous.GsmAnnoymous
+api-version: '26.2'
+author: GUNGOGUMA
+description: GSM anonymous nickname and skin plugin.
