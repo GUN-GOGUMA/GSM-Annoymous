@@ -65,7 +65,7 @@ public final class AnonymousNameGenerator {
     private String normalizePrefix(String value) {
         String normalized = value == null || value.isBlank() ? "gsm_" : value;
         if (normalized.length() >= MINECRAFT_NAME_LIMIT) {
-            throw new IllegalArgumentException("Anonymous name prefix must be shorter than 16 characters.");
+            return normalized.substring(0, MINECRAFT_NAME_LIMIT - 1);
         }
         return normalized;
     }
