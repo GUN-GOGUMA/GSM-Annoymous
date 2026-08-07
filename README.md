@@ -1,39 +1,48 @@
 # GSM-Annoymous
 
+GSM SMP용 닉네임/스킨 익명화 Paper 플러그인입니다.
+
 ## 기능
 
-- UUID 기준 고정 익명 닉네임 생성
-- `/hide_nick` 명령어로 닉네임 익명 ON/OFF
-- `/hide_skin` 명령어로 Steve 스킨 익명 ON/OFF
-- 유저별 익명 상태를 `players.yml`에 저장
-- 채팅, tab list, display name, nametag, 입장/퇴장, 사망, 도전과제 메시지에 익명 닉네임 반영
-- 설정 리로드, 상태 조회, 초기화, 익명 닉네임 재생성을 위한 관리자 명령어 제공
+- UUID 기반 고정 익명 닉네임 생성
+- `/hide_nick`로 닉네임 익명화 ON/OFF
+- `/hide_skin`으로 Steve 스킨 익명화 ON/OFF
+- 플레이어별 익명화 상태 저장
+- 채팅, tab list, display name, nametag, join/quit, death, advancement 메시지에 익명 닉네임 반영
+- 관리자용 reload/status/reset/regenerate 명령 제공
 
-## 익명 닉네임
-
-익명 닉네임은 플레이어 UUID와 설정된 salt를 기준으로 생성합니다.
+## 익명 닉네임 규칙
 
 ```text
 gsm_{sha1(uuid + salt).slice(0,6)}
 ```
 
-UUID를 기준으로 하므로 마인크래프트 닉네임을 바꿔도 익명 닉네임은 유지됩니다. `anonymous.salt`를 바꾸면 생성되는 익명 닉네임이 달라집니다.
+- 같은 UUID와 같은 salt는 항상 같은 익명 닉네임을 만듭니다.
+- salt를 바꾸면 모든 익명 닉네임이 달라집니다.
+- 운영 서버에서는 기본 salt를 반드시 개인 salt로 변경해야 합니다.
 
-## 데이터 저장
-
-유저별 상태는 아래 파일에 저장됩니다.
+## 데이터 파일
 
 ```text
 plugins/GSM-Annoymous/players.yml
 ```
 
-각 플레이어는 UUID 기준으로 저장되며, 다음 값을 가집니다.
+UUID 기준으로 다음 값을 저장합니다.
 
 - `hideNick`
 - `hideSkin`
 - `anonymousName`
 - `lastKnownName`
 - `updatedAt`
+
+## 설정
+
+`plugins/GSM-Annoymous/config.yml`
+
+- `anonymous.prefix`: 익명 닉네임 prefix, 기본 `gsm_`
+- `anonymous.salt`: 익명 닉네임 생성 salt
+- `anonymous.hide-nick-by-default`: 최초 접속 시 닉네임 익명화 기본값
+- `anonymous.hide-skin-by-default`: 최초 접속 시 스킨 익명화 기본값
 
 ## 명령어
 
@@ -56,9 +65,20 @@ gsmannoymous.admin.status
 gsmannoymous.admin.reset
 ```
 
-## 주의사항
+## 빌드
 
-- 운영 서버에서 사용하기 전에 `anonymous.salt`를 반드시 개인 salt 값으로 변경해야 합니다.
-- 실제 스킨 복구는 플레이어가 접속할 때 캐시한 실제 프로필 텍스처를 사용합니다.
-- 실제 스킨 캐시가 없는 상태라면 스킨 복구를 위해 재접속이 필요할 수 있습니다.
-- nametag 익명화는 Bukkit/Paper의 `customName`을 사용합니다. 최종 표시 방식은 실서버에서 직접 확인해야 합니다.
+```bat
+gradlew.bat build
+```
+
+산출물:
+
+```text
+build/libs/GSM-Annoymous-1.0.0.jar
+```
+
+## 배포 위치
+
+```text
+servers/GSM-SMP/plugins/
+```
