@@ -26,6 +26,7 @@ public final class GsmAnnoymous extends JavaPlugin {
                 new HideSkinCommand(nicknameService, skinService, playerPrivacyRepository)
         );
         Objects.requireNonNull(getCommand("annoymous")).setExecutor(new AnnoymousAdminCommand(this));
+        getServer().getOnlinePlayers().forEach(player -> nicknameService.apply(player, nicknameService.prepare(player)));
         getLogger().info("GSM-Annoymous enabled.");
     }
 
@@ -49,6 +50,9 @@ public final class GsmAnnoymous extends JavaPlugin {
     public void onDisable() {
         if (playerPrivacyRepository != null) {
             playerPrivacyRepository.saveAll();
+        }
+        if (nicknameService != null) {
+            nicknameService.cleanupNameTags();
         }
         getLogger().info("GSM-Annoymous disabled.");
     }
